@@ -8,7 +8,7 @@ For the most part, I manage environments based on the GNU/Linux and BSD systems.
 
 You can find the full source code of my project on [GitHub](https://github.com/trimstray).
 
-The postings on this site are my own and don't necessarily represent my employer’s positions, strategies or opinions.
+The postings on this domain are my own and don't necessarily represent my employer’s positions, strategies or opinions.
 
 ## Contact
 
