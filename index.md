@@ -14,7 +14,7 @@ The postings on this site are my own and don't necessarily represent my employer
 
 If you wish to contact me:
 
-- hit me on [Twitter](https://twitter.com/trimstray)
+- hit me on [Twitter](https://twitter.com/trimstray) or [Keybase](https://keybase.io/trimstray)
 - via e-mail (base64): `dHJpbXN0cmF5QGdtYWlsLmNvbQo=`
 - sometimes on TorChat: `ltcpwvt5tfdoaseo`
 
