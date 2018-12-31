@@ -1,4 +1,5 @@
-remote_theme: ankitsultana/researcher
+remote_theme: ankitsultana/researcher@gem
+
 title: x33con
 
 uri: "https://trimstray.github.io"
