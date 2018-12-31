@@ -1,14 +1,17 @@
 remote_theme: ankitsultana/researcher@gem
 
-title: x33con
-
-uri: "https://trimstray.github.io"
+title: trimstray
+url: "https://trimstray.github.io"
 baseurl: ""
-
-exclude: [LICENSE, CNAME, README.md, .gitignore, Gemfile, Gemfile.lock]
 
 markdown: kramdown
 
 sass:
     style: compressed
     sass_dir: _sass
+
+nav:
+ - name: "About"
+   link: "/researcher/"
+ - name: "Contact"
+   link: "contact"
