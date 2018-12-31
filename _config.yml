@@ -1,0 +1,11 @@
+title: Researcher
+url: "https://ankitsultana.com"
+baseurl: "/researcher"
+
+markdown: kramdown
+
+tracking_id: #
+
+sass:
+    style: compressed
+    sass_dir: _sass
