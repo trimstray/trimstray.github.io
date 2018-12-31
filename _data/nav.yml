@@ -1,8 +1,5 @@
-- name: "Contact"
-  link: "contact"
+- name: "Blog"
+  link: "https://blog.x33con.info"
 
-- name: "Resume"
-  link: "resume.pdf"
-
-- name: "About"
-  link: "/researcher/"
+- name: "Index"
+  link: "https://x33con.info"

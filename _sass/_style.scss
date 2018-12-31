@@ -17,6 +17,7 @@ body {
 a {
     text-decoration: none;
     color: $accent;
+    font-weight: bold;
 }
 a:hover {
     text-decoration: underline;
@@ -33,8 +34,16 @@ hr {
  */
 
 #author-name {
-    font-size: 30px;
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "Arial";
     color: #272727;
+    display: inline-block;
+}
+#info-name {
+    font-size: 12px;
+    margin-top: 36px;
+    margin-left: -100px;
     display: inline-block;
 }
 .navbar {
@@ -56,10 +65,12 @@ hr {
 .pull-left {
     @extend .alignable;
     float: left;
+    margin: -10px;
 }
 .pull-right {
     @extend .alignable;
     float: right;
+    margin: 6px;
 }
 
 /* Divs */

@@ -1,10 +1,12 @@
-title: Researcher
-url: "https://ankitsultana.com"
-baseurl: "/researcher"
+title: x33con
+
+uri: "https://x33con.info"
+url: "https://x33con.info"
+baseurl: ""
+
+exclude: [LICENSE, CNAME, README.md, .gitignore, Gemfile, Gemfile.lock]
 
 markdown: kramdown
-
-tracking_id: #
 
 sass:
     style: compressed

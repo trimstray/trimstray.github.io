@@ -4,42 +4,30 @@ layout: default
 
 ## About Me
 
-<img class="profile-picture" src="sherlock.jpg">
+Hi! Welcome to my website.
 
-Hi! I am a junior year student of B.E. Computer Science at Birla Institute of Technology and Science, Pilani.
+I'm a System and (tiny) Network Administrator. Also Security Enthusiast.
 
-This is a jekyll based resume template. You can find the full source code on [GitHub](https://github.com/bk2dcradle/researcher)
+For the most part, I manage environments based on the GNU/Linux and BSD systems.
 
-## Research Interest
+You can find the full source code of my project on [GitHub](https://github.com/trimstray).
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus ipsum ac erat aliquam dapibus. Vestibulum vehicula placerat ex, a consectetur odio pharetra quis. Mauris id urna ante. Fusce pharetra diam ac nisi aliquet, vel egestas ex iaculis. Pellentesque laoreet cursus tellus sed pellentesque. Praesent a rhoncus elit. Nunc ipsum nisl, consequat sit amet pretium quis, gravida id ipsum.
+The postings on this site are my own and don't necessarily represent my employer’s positions, strategies or opinions.
+
+## Contact
+
+If you wish to contact me:
+
+- hit me on [Twitter](https://twitter.com/trimstray)
+- via e-mail (base64): `dHJpbXN0cmF5QGdtYWlsLmNvbQo=`
+- sometimes on TorChat: `ltcpwvt5tfdoaseo`
 
 ## Publications
 
-1. F.Bar, J.Doe: Effects of having a placeholder of a name
-2. S.Holmes, J.Watson: Consequences of living with a sociopath in London
+If you want to read my publications, take a look at my [blog](https://x33con.info/blog).
 
-## Typography
+At this moment they are only in Polish.
 
-This is a [link](http://google.com). Something *italics* and something **bold**.
+## Public key
 
-Here is a table
-
-Year | Award | Category
------|-------|--------
-2014 | Emmy  | Won Outstanding Lead Actor in a miniseries or a movie
-2015 | BAFTA | Nominated for Best Leading Actor for Sherlock
-2014 | Satellite | Won Best Actor miniseries or television film
-
-Here is a horizontal rule
-
----
-
-Here is a blockquote
-
-> To a great mind, nothing is little
-
-## References
-
-* Foo Bar: Head of Department, Placeholder Names, Lorem
-* John Doe: Associate Professor, Department of Computer Science, Ipsum
+[0x66677668495D7BC1](https://pgp.mit.edu/pks/lookup?op=vindex&search=0x66677668495D7BC1)
