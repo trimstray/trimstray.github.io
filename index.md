@@ -2,8 +2,6 @@
 layout: default
 ---
 
-# Intro
-
 Hi! Welcome to my website.
 
 ## About Me
@@ -16,7 +14,7 @@ The postings on this domain are my own and don't necessarily represent my employ
 
 ## Projects/publications
 
-You can find the full source code of my project on [GitHub](https://github.com/trimstray) and my stories on [Medium](https://medium.com/@trimstray).
+You can find the full source code of my project on [GitHub](https://github.com/trimstray) and articles on my [Medium](https://medium.com/@trimstray) wall.
 
 ## Contact
 
