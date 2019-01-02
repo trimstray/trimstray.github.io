@@ -8,7 +8,7 @@ Hi! Welcome to my website.
 
 I'm a System and (tiny) Network Administrator. Also Security Enthusiast.
 
-For the most part, I manage environments based on the GNU/Linux and BSD systems.
+For the most part, I manage environments based on GNU/Linux and BSD systems.
 
 The postings on this domain are my own and don't necessarily represent my employer’s positions, strategies or opinions.
 
