@@ -1,12 +1,10 @@
-## trimstray.github.io
+## [trimstray.github.io](https://github.com/trimstray)
 
 My simple website.
-
-My Profile: **[trimstray](https://github.com/trimstray)**  
 
 ## Theme options
 
 Theme: [Researcher](https://github.com/bk2dcradle/researcher)  
-Author profile: [bk2dcradle](https://github.com/bk2dcradle)  
+Author theme: [bk2dcradle](https://github.com/bk2dcradle)  
 Theme demo: [Reseracher demo](http://ankitsultana.com/researcher)  
 Theme license: [GNU GPL v3](https://github.com/bk2dcradle/researcher/blob/gh-pages/LICENSE)  
