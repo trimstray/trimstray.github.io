@@ -2,19 +2,21 @@
 layout: default
 ---
 
-# SGVsbG8gd29ybGQK
-
-## About Me
+# Intro
 
 Hi! Welcome to my website.
+
+## About Me
 
 I'm a System and (tiny) Network Administrator. Also Security Enthusiast.
 
 For the most part, I manage environments based on the GNU/Linux and BSD systems.
 
-You can find the full source code of my project on [GitHub](https://github.com/trimstray).
-
 The postings on this domain are my own and don't necessarily represent my employer’s positions, strategies or opinions.
+
+## Projects/publications
+
+You can find the full source code of my project on [GitHub](https://github.com/trimstray) and my stories on [Medium](https://medium.com/@trimstray).
 
 ## Contact
 
