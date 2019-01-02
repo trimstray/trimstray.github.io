@@ -14,7 +14,9 @@ The postings on this domain are my own and don't necessarily represent my employ
 
 ## Projects/publications
 
-You can find the full source code of my project on [GitHub](https://github.com/trimstray) and articles on my [Medium](https://medium.com/@trimstray) wall.
+You can find the full source code of my project on [GitHub](https://github.com/trimstray).
+
+I decided to start writing articles on my [Medium](https://medium.com/@trimstray) wall. At this moment they are only in Polish.
 
 ## Contact
 
