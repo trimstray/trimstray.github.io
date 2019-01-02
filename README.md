@@ -1,4 +1,4 @@
-## [trimstray.github.io](https://github.com/trimstray)
+## [trimstray.github.io](https://trimstray.github.io)
 
 My simple website.
 
