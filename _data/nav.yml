@@ -1,5 +1,5 @@
-# - name: "Blog"
-#   link: "https://trimstray.github.io"
+- name: "Blog"
+  link: "https://trimstray.github.io/blog"
 
 - name: "Index"
   link: "https://trimstray.github.io"
