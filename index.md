@@ -16,7 +16,7 @@ The postings on this domain are my own and don't necessarily represent my employ
 
 You can find the full source code of my project on [GitHub](https://github.com/trimstray).
 
-I decided to start writing articles on my [Blog](https://x33con.info) wall. At this moment they are only in Polish.
+I decided to start writing articles on my [Blog](https://x33con.info). At this moment they are only in Polish.
 
 ## Contact
 
