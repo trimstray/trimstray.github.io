@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} - *NIX & SYSOPS & SECURITY</title>
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} - writing on software, book writeups, projects and more</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +40,7 @@
     <div class="wrapper">
         <div class="navbar container">
             <a id="author-name" class="alignable pull-left" href="{{ site.uri }}{{ site.baseurl }}">{{ site.title }}</a>
-            <p id="info-name" class="alignable pull-left">writing on software, book writeups, projects and more</p>
+            <p id="info-name" class="alignable pull-left"># writing on software, book writeups, projects and more</p>
             <ul class="alignable pull-right navbar-ul">
                 {% for x in site.data.nav %}
                     <li class="alignable pull-right nav-list"><a href="{{ x.link }}">{{ x.name }}</a>
