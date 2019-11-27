@@ -1,0 +1,40 @@
+<footer>
+  <div id="bio">
+    <div id="bio-image">
+      <img src="/static/gravatar.png" alt="trimstray">
+    </div>
+
+    <div id="bio-text">
+      <p>Hi! Welcome to my blog.</p>
+      <p>I’m a System and (tiny) Network Administrator. Also Security Enthusiast.</p>
+
+      <div id="bio-social">
+        {% include social.html %}
+      </div>
+    </div>
+  </div>
+
+  {% unless page.skip_related %}
+  <aside>
+    <h3>Further reading</h3>
+    <ul class="posts">
+      {% if page.tags %}
+        {% assign sn = page.tags.first %}
+        {% for post in site.tags[sn] limit:3 %}
+          {% unless page.title == post.title %}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+          {% endunless %}
+        {% endfor %}
+      {% else %}
+        {% for post in site.related_posts limit:3 %}
+          {% unless page.title == post.title %}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+          {% endunless %}
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </aside>
+  {% endunless %}
+</footer>
+
+{% include fine-print.html %}

@@ -1,0 +1,24 @@
+- name: Publications
+  desc: |
+    My publications: about *NIX & SYSOPS & SECURITY
+  tag_name: publications
+
+- name: News
+  desc: |
+    The latest and important IT news
+  tag_name: news
+
+- name: Projects
+  desc: |
+    Something about my projects
+  tag_name: projects
+
+- name: Awesome
+  desc: |
+    Everything about awesome: lists, blogs, tools and more
+  tag_name: awesome
+
+- name: Talks
+  desc: |
+    Found on the Internet
+  tag_name: talks

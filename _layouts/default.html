@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>trimstray - {{ page.title }}</title>
+  <meta name="author" content="trimstray" />
+  <meta name="description" content="unix, linux, sysops, security" />
+
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' }}" />
+
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:300,400,700|Open+Sans:300,400,700&amp;subset=latin-ext" rel="stylesheet">
+
+  <link rel="shortcut icon" href="/static/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="trimstray's Blog" href="/atom.xml" />
+
+  {% if site.github %}
+    <link rel="stylesheet" href="/css/site.css?sha={{ site.github.build_revision }}">
+  {% else %}
+    <link rel="stylesheet" href="/css/site.css">
+  {% endif %}
+</head>
+<body>
+  <section>
+    {{ content }}
+  </section>
+
+  {% if site.github %}
+    {% include analytics.html %}
+  {% endif %}
+</body>
+</html>

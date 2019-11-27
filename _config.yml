@@ -1,0 +1,19 @@
+url: https://trimstray.github.io
+lsi: false
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+permalink: /:title:output_ext
+exclude: ["CNAME", "README.md", "Rakefile", "generate.rb", "Gemfile", "Gemfile.lock"]
+include: ["_pages"]
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jemoji
+author:
+  name: trimstray
+  url: trimstray.github.io
+title: trimstray's Blog
+feed:
+  path: atom.xml
