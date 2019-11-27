@@ -215,7 +215,7 @@ GEM
     neat (3.0.1)
       sass (~> 3.4)
       thor (~> 0.19)
-    nokogiri (1.10.0)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     octokit (4.13.0)
       sawyer (~> 0.8.0, >= 0.5.3)
