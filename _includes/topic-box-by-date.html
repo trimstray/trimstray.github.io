@@ -1,0 +1,39 @@
+<div class="topic-box">
+  {% comment %}
+    timeframe 2419200 = seconds in 4 weeks
+    maxposts = 10
+    label_FOOBAR just clean way to handle html with liquid
+  {% endcomment %}
+
+  {% assign timeframe = 2419200 %}
+  {% assign maxposts = 10 %}
+  {% assign date_format = site.minima.date_format | default: "%d/%m/%y" %}
+
+  <ul class="no-bullets">
+  {% for post in site.posts limit: maxposts %}
+    {% assign post_in_seconds = post.last_modified_at | date: "%s" | plus: 0 %}
+    {% assign recent_posts = "now" | date: "%s" | minus: timeframe %}
+    {% assign post_updated = post.last_modified_at | date: date_format %}
+    {% capture post_date %}{{ post.date | date: date_format }}{% endcapture %}
+
+    {% if {{post.date | date: "%s"}} > recent_posts %}
+      {% if post.new == true %}
+        {% capture label_new %}<span class="label label-primary">New</span>{% endcapture %}
+      {% endif %}
+    {% endif %}
+
+    <li class="top-posts">
+      <h4 class="header-top-sorted">{{ post_date }}&nbsp;
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}</a> {{ label_new }}{{ label_updated }}
+          {% comment %}
+          {{ post.title | escape }}</a>
+          {% endcomment %}
+      </h4>
+    </li>
+    {% assign post_date = '' %}
+    {% assign label_new = '' %}
+    {% assign label_updated = '' %}
+  {% endfor %}
+  </ul>
+</div>

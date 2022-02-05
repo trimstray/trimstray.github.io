@@ -1,0 +1,138 @@
+diff --git sentinel.conf sentinel.conf
+index bc9a705ac..e999a9e45 100644
+--- sentinel.conf
++++ sentinel.conf
+@@ -145,6 +145,26 @@ sentinel parallel-syncs mymaster 1
+ # Default is 3 minutes.
+ sentinel failover-timeout mymaster 180000
+ 
++# sentinel ignore-max-down-time <no|yes>
++#
++# Ignores master_link_down_time and replication offset. This break slave select
++# logic and may destroy data of old master but in some cases it may be useful,
++# especially if you store non-critical data or if you want to fully automatic
++# failover.
++#
++# Example:
++#
++# 1x Master (R1), 2x Slave (R2, R3), 3x Sentinel (S1, S2, S3)
++#
++# - R1 is down
++# - R2 is promote to MASTER
++# - R3 is down
++# - R2 is down
++# - R3 is up but still SLAVE (to fix this, set ignore-max-down-time to yes)
++#
++# Default is no.
++sentinel ignore-max-down-time no
++
+ # SCRIPTS EXECUTION
+ #
+ # sentinel notification-script and sentinel reconfig-script are used in order
+@@ -167,7 +187,7 @@ sentinel failover-timeout mymaster 180000
+ # NOTIFICATION SCRIPT
+ #
+ # sentinel notification-script <master-name> <script-path>
+-# 
++#
+ # Call the specified notification script for any sentinel event that is
+ # generated in the WARNING level (for instance -sdown, -odown, and so forth).
+ # This script should notify the system administrator via email, SMS, or any
+@@ -191,14 +211,14 @@ sentinel failover-timeout mymaster 180000
+ # When the master changed because of a failover a script can be called in
+ # order to perform application-specific tasks to notify the clients that the
+ # configuration has changed and the master is at a different address.
+-# 
++#
+ # The following arguments are passed to the script:
+ #
+ # <master-name> <role> <state> <from-ip> <from-port> <to-ip> <to-port>
+ #
+ # <state> is currently always "failover"
+ # <role> is either "leader" or "observer"
+-# 
++#
+ # The arguments from-ip, from-port, to-ip, to-port are used to communicate
+ # the old address of the master and the new address of the elected replica
+ # (now a master).
+diff --git src/sentinel.c src/sentinel.c
+index 1d67a440a..83083be87 100644
+--- src/sentinel.c
++++ src/sentinel.c
+@@ -106,6 +106,12 @@ typedef struct sentinelAddr {
+ #define SENTINEL_LEADER (1<<17)
+ #define SENTINEL_OBSERVER (1<<18)
+ 
++/*
++ * Ignores master_link_down_time and replication offset.
++ * WARNING: This break slave select logic and may destroy
++ *          data of old master but in some cases it may be useful. */
++#define SENTINEL_IGNORE_MAX_DOWN_TIME 0
++
+ /* Script execution flags and limits. */
+ #define SENTINEL_SCRIPT_NONE 0
+ #define SENTINEL_SCRIPT_RUNNING 1
+@@ -248,6 +254,7 @@ struct sentinelState {
+     unsigned long simfailure_flags; /* Failures simulation. */
+     int deny_scripts_reconfig; /* Allow SENTINEL SET ... to change script
+                                   paths at runtime? */
++    int ignore_max_down_time; /* Ignore master_link_down_since_seconds huge value */
+ } sentinel;
+ 
+ /* A script execution job. */
+@@ -490,6 +497,7 @@ void initSentinel(void) {
+     sentinel.announce_port = 0;
+     sentinel.simfailure_flags = SENTINEL_SIMFAILURE_NONE;
+     sentinel.deny_scripts_reconfig = SENTINEL_DEFAULT_DENY_SCRIPTS_RECONFIG;
++    sentinel.ignore_max_down_time = SENTINEL_IGNORE_MAX_DOWN_TIME;
+     memset(sentinel.myid,0,sizeof(sentinel.myid));
+ }
+ 
+@@ -1742,6 +1750,12 @@ char *sentinelHandleConfiguration(char **argv, int argc) {
+             return "Please specify yes or no for the "
+                    "deny-scripts-reconfig options.";
+         }
++    } else if (!strcasecmp(argv[0],"ignore-max-down-time") && argc == 2) {
++        /* ignore-max-down-time <yes|no> */
++        if ((sentinel.ignore_max_down_time = yesnotoi(argv[1])) == -1) {
++            return "Please specify yes or no for the "
++                   "ignore-max-down-time option.";
++        }
+     } else {
+         return "Unrecognized sentinel configuration statement.";
+     }
+@@ -1768,6 +1782,12 @@ void rewriteConfigSentinelOption(struct rewriteConfigState *state) {
+     rewriteConfigRewriteLine(state,"sentinel",line,
+         sentinel.deny_scripts_reconfig != SENTINEL_DEFAULT_DENY_SCRIPTS_RECONFIG);
+ 
++    /* sentinel ignore-max-down-time. */
++    line = sdscatprintf(sdsempty(), "sentinel ignore-max-down-time %s",
++        sentinel.ignore_max_down_time ? "yes" : "no");
++    rewriteConfigRewriteLine(state,"sentinel",line,
++        sentinel.ignore_max_down_time != SENTINEL_IGNORE_MAX_DOWN_TIME);
++
+     /* For every master emit a "sentinel monitor" config entry. */
+     di = dictGetIterator(sentinel.masters);
+     while((de = dictNext(di)) != NULL) {
+@@ -4096,6 +4116,7 @@ sentinelRedisInstance *sentinelSelectSlave(sentinelRedisInstance *master) {
+     dictIterator *di;
+     dictEntry *de;
+     mstime_t max_master_down_time = 0;
++    int ignore_max_down_time = sentinel.ignore_max_down_time;
+ 
+     if (master->flags & SRI_S_DOWN)
+         max_master_down_time += mstime() - master->s_down_since_time;
+@@ -4119,7 +4140,12 @@ sentinelRedisInstance *sentinelSelectSlave(sentinelRedisInstance *master) {
+         else
+             info_validity_time = SENTINEL_INFO_PERIOD*3;
+         if (mstime() - slave->info_refresh > info_validity_time) continue;
+-        if (slave->master_link_down_time > max_master_down_time) continue;
++        if (slave->master_link_down_time > max_master_down_time) {
++            /* It's important check, but if we use Redis for non-critical data,
++             * we may "break" this and ignore a huge value of master_link_down_time
++             * (INFO -> master_link_down_since_seconds). */
++            if (ignore_max_down_time != 1) continue;
++        }
+         instance[instances++] = slave;
+     }
+     dictReleaseIterator(di);

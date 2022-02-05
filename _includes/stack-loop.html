@@ -1,0 +1,9 @@
+{% assign stack = page.stack | split: ',' %}
+
+{% if stack.size > 0 %}
+<ul class="horizontal-list">
+  {% for language in stack %}
+    <li>{{ language }}</li>
+  {% endfor %}
+</ul>
+{% endif %}

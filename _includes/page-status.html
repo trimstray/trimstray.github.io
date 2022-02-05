@@ -1,0 +1,23 @@
+{% assign timeframe = 2419200 %}
+
+{% assign post_in_seconds = page.last_modified_at | date: "%s" | plus: 0 %}
+{% assign recent_posts = "now" | date: "%s" | minus: timeframe %}
+
+{% if {{page.date | date: "%s"}} > recent_posts %}
+  {% if page.new == true %}
+    {% capture label_new %}<span class="label post-primary">New</span>{% endcapture %}
+  {% endif %}
+{% endif %}
+
+{% if post_in_seconds > recent_posts %}
+  {% if page.last_modified_at > page.date %}
+    {% capture label_updated %}<span class="label post-info">Updated {{ page.last_modified_at | date: "%d-%m-%Y" }}</span>{% endcapture %}
+  {% endif %}
+{% endif %}
+
+<span class="label-posts">
+  {{ label_new }}{{ label_updated }}
+</span>
+
+{% assign label_new = '' %}
+{% assign label_updated = '' %}

@@ -1,0 +1,15 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.DS_Store
+*.gem
+*.sublime-project
+*.sublime-workspace
+.bundle
+_asset_bundler_cache
+codekit-config.json
+example/_site
+Gemfile.lock
+node_modules
+npm-debug.log*

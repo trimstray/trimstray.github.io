@@ -1,0 +1,20 @@
+{% if jekyll.environment == 'production' and site.google_analytics %}
+  {% include google-analytics.html %}
+{% endif %}
+
+<div class="footer">
+  <div class="f-left">
+    Social&nbsp;&nbsp;|&nbsp;
+    <a class="footer" href="https://twitter.com/trimstray">Twitter</a>
+    <a class="footer" href="https://github.com/trimstray">Github</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    License&nbsp;&nbsp;|&nbsp;
+    <a class="footer" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+    <!--
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    {% assign first = '2015' | plus: 0 %}
+    {% assign last = 'now' | date: "%Y" | plus: 0 %}
+    © {% if last > first %}{{ first }}-{% endif %}{{-last-}}
+    -->
+  </div>
+</div>

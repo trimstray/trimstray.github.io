@@ -1,0 +1,70 @@
+<div class="topic-box">
+  {% comment %}
+    timeframe 2419200 = seconds in 4 weeks
+    maxposts = 10
+    label_FOOBAR just clean way to handle html with liquid
+  {% endcomment %}
+
+  {% assign timeframe = 2419200 %}
+  {% assign maxposts = 200 %}
+  {% assign date_format = site.minima.date_format | default: "%d/%m/%y" %}
+
+  <ul class="no-bullets-by-categories">
+  {% assign categories_list = site.categories | sort %}
+    {% if categories_list.first[0] == null %}
+      {% for category in categories_list %}
+        <li class="horizontal"><a class="topic" href="#{{ category | downcase | downcase | url_escape | strip | replace: ' ', '-' }}">{{ category | camelcase }} ({{ site.tags[category].size }})</a></li>
+      {% endfor %}
+    {% else %}
+      {% for category in categories_list %}
+        <li class="horizontal"><a class="topic" href="#{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a></li>
+      {% endfor %}
+    {% endif %}
+  {% assign categories_list = nil %}
+  </ul>
+
+  {% assign categories_sorted_list = site.categories | sort %}
+  {% for category in categories_sorted_list %}
+    <h3 class="header-top-sorted" id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }}</h3>
+    <ul class="no-bullets">
+      {% assign pages_list = category[1] %}
+      {% for post in pages_list %}
+
+        {% assign post_date = '' %}
+        {% assign label_new = '' %}
+        {% assign label_updated = '' %}
+
+        {% if post.title != null %}
+          {% if group == null or group == post.group %}
+            {% assign post_in_seconds = post.last_modified_at | date: "%s" | plus: 0 %}
+            {% assign recent_posts = "now" | date: "%s" | minus: timeframe %}
+            {% assign post_updated = post.last_modified_at | date: date_format %}
+            {% capture post_date %}{{ post.date | date: date_format }}{% endcapture %}
+
+            {% if {{post.date | date: "%s"}} > recent_posts %}
+              {% if post.new == true %}
+                {% capture label_new %}<span class="label label-primary">New</span>{% endcapture %}
+              {% endif %}
+            {% endif %}
+
+            <li class="top-posts">
+              <h4 class="header-top-sorted">{{ post_date }}&nbsp;
+                <a class="post-link" href="{{ post.url | relative_url }}">
+                  {{ post.title | escape }}</a> {{ label_new }}{{ label_updated }}
+                  {% comment %}
+                  {{ post.title | escape }}</a>
+                  {% endcomment %}
+              </h4>
+            </li>
+
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% assign pages_list = nil %}
+      {% assign group = nil %}
+
+    </ul>
+  {% endfor %}
+
+</div>

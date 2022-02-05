@@ -1,0 +1,50 @@
+---
+layout: default
+title: post
+id: post
+---
+
+<h2 class="text-size-larger">{{ page.title }}</h2>
+
+{% assign author = site[page.author] %}
+{% if author %}
+  <p class="text-size-id">
+    {{ page.date | date_to_string }}, {{ author.name }} {% include page-status.html %}
+    <!--
+    {{ page.date | date_to_string }}, {{ author.name }}, {% include page-read-time.html %} {% include page-status.html %}
+    -->
+  </p>
+{% else %}
+  <p class="text-size-id">
+    {{ page.date | date_to_string }} {% include page-status.html %}
+    <!--
+    {{ page.date | date_to_string }}, {% include page-read-time.html %} {% include page-status.html %}
+    -->
+  </p>
+{% endif %}
+
+<p class="topic-tag">
+  {% assign sorted_tags = page.tags | sort %}
+  {% for tag_name in sorted_tags %}
+    {% capture tag_name %}{{ tag }}{% endcapture %}
+    <a class="topic-tag-link" href="/tags/{{ tag_name }}">{{ tag_name }}&nbsp;</a>
+  {% endfor %}
+</p>
+
+{% include share.html %}
+
+{% if page.toc == true %}
+  {% include toc.html html=content class="section-nav" li="section-nav" a="section-a" h_max=3 %}
+{% endif %}
+
+{% include content-anchors.html html=content anchorBody="#" anchorClass="h-anchors" %}
+
+{% include related-posts.html %}
+
+{% if site.disqus.shortname %}
+  {% include comments.html %}
+{% endif %}
+
+{% comment %}
+  {% include next-previous.html %}
+{% endcomment %}

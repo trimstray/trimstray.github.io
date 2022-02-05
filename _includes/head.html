@@ -1,0 +1,18 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link href="{{ "assets/img/favicons/favicon.png" | relative_url }}" rel="shortcut icon">
+  <link rel="stylesheet" href="{{ "/assets/style.css" | relative_url }}?v=2">
+  <!-- Theme used for syntax highlighting of code -->
+  <!-- <link rel="stylesheet" href="/assets/a11y-dark.css"> -->
+  <link rel="stylesheet" href="/assets/code.css">
+  {% if site.plugins contains 'jekyll-feed' or site.gems contains 'jekyll-feed'%}
+    {% comment %}
+      Add Atom feed link if jekyll-feed plugin is enabled
+    {% endcomment %}
+    {% include head-feed.html %}
+  {% endif %}
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Sans+Pro:400,700|Cousine&display=swap&subset=latin-ext" rel="stylesheet"> -->
+</head>

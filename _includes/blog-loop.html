@@ -1,0 +1,27 @@
+<ul class="no-bullets">
+  {% for post in site.posts %}
+    <li>
+
+      <h3 class="header">
+        <a class="std" href="{{ post.url | relative_url }}">
+          {{ post.title }}
+        </a>
+      </h3>
+
+      <p class="posted">{{ post.date | date: site.date_format }} {% include post-status.html %}</p>
+      <!--
+      <p class="posted">{{ post.date | date: site.date_format }}, {% include post-read-time.html %} {% include post-status.html %}</p>
+      <p>{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
+      -->
+      <p>{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+      <!--
+      <a class="read-more" href="{{ site.baseurl }}{{ post.url }}">Czytaj dalej &#10132;</a>
+      -->
+
+      {% comment %}
+        {% include author.html %}
+      {% endcomment %}
+
+    </li>
+  {% endfor %}
+</ul>

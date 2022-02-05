@@ -1,0 +1,100 @@
+lang: pl-PL
+
+toby_osbourn:
+  name: Michał Żurawski
+  email: trimstray@gmail.com
+
+title: Trimstray's Blog
+tagline: >-
+  Something about *NIX & SYSOPS & SECURITY
+description: >-
+  Something about *NIX & SYSOPS & SECURITY. My personal notes. I use this site to share and bookmark various things.
+baseurl: ''
+url: "https://trimstray.github.io"
+
+twitter:
+  username: trimstray
+  card: summary
+
+social:
+  name: Michał Żurawski
+  links:
+    - https://twitter.com/trimstray
+    - https://github.com/trimstray
+    - https://keybase.io/trimstray
+
+date_format: '%b %-d, %Y'
+
+disqus:
+  comments: false
+  shortname: trimstray
+
+collections:
+  projects:
+    output: false
+    permalink: /projects/:path/
+  posts:
+    output: true
+    permalink: /posts/:path/
+
+sass:
+  sass_dir: _sass
+  style: compact
+
+# Build settings
+markdown: kramdown
+
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    default_lang: 'conf'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+
+plugins: # previsously gems
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+feed:
+  path: atom.xml
+
+google_analytics: UA-160216740-1
+
+# HTTP response headers.
+# - https://jekyllrb.com/docs/configuration/#custom-webrick-headers
+# webrick:
+#   headers:
+#     Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';
+
+# Exclude from processing.
+exclude:
+  - .asset-cache
+  - .bundle
+  - .codeclimate.yml
+  - .editorconfig
+  - .gitattributes
+  - .jekyll-assets-cache
+  - .sass-cache
+  - .scss-lint.yml
+  - CHANGELOG
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - node_modules
+  - Rakefile
+  - README
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - _drafts/
+  - _posts_templates/
+  - _scripts/

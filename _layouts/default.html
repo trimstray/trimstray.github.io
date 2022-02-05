@@ -1,0 +1,53 @@
+{% assign date_format = "%b %-d, %Y" %}
+
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {% include head.html %}
+  <body class="page--{{ page.title | slugify }}">
+
+    {% if page.toc == true %}
+      <span id="beg-id-post"></span>
+    {% endif %}
+
+    {% comment %}
+      {% include navigation.html %}
+    {% endcomment %}
+
+    {% include menu.html %}
+
+    <header></header>
+
+    <main role="main" class="container">
+
+      {% comment %}
+        {% include search.html %}
+      {% endcomment %}
+
+      {{content}}
+
+    </main>
+
+    {% include footer.html %}
+
+    {% if page.toc == true %}
+      <span id="end-id-post"></span>
+    {% endif %}
+
+    <script src="{{ "/js/main.js" | relative_url }}"></script>
+    <script src="/js/simple-jekyll-search.min.js"></script>
+
+    <script>
+      window.simpleJekyllSearch = new SimpleJekyllSearch({
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('results-container'),
+        json: '{{ site.baseurl }}/search.json',
+        searchResultTemplate: '<li><a href="{url}?query={query}" title="{desc}">{title}</a></li>',
+        noResultsText: 'Nie znaleziono wyników',
+        limit: 20,
+        fuzzy: false,
+        exclude: ['Welcome']
+      })
+    </script>
+
+  </body>
+</html>

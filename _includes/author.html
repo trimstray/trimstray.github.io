@@ -1,0 +1,12 @@
+<p class="author">
+  {% assign author = site[page.author] %}
+  {% if author %}
+    <span>
+      Autor: <b>{{ author.name }}</b>
+    </span>
+  {% else %}
+    <span>
+      Autor: <b>Michał Żurawski</b>
+    </span>
+  {% endif %}
+</p>

@@ -1,0 +1,15 @@
+<div class="PageNavigation">
+  <p class="PageNavigationText">Co dalej?</p>
+  <p class="PageNavigationLinks">
+    <p class="PageNavigationBeg">
+      <a class="prev" href="#beg-id">Idź na początek wpisu</a>
+    </p>
+    {% if page.previous.url %}
+      <a class="prev" href="{{page.previous.url}}">&#8674;&nbsp; {{page.previous.title}}</a>
+    {% endif %}
+    <br>
+    {% if page.next.url %}
+      <a class="prev" href="{{page.next.url}}">&#8672;&nbsp; {{page.next.title}}</a>
+    {% endif %}
+  </p>
+</div>
