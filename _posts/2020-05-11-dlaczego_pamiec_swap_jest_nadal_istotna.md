@@ -338,9 +338,80 @@ Co istotne, mechanizm możemy dostroić, określając priorytety (punktację) pr
 
 ## Czy wykorzystanie pamięci wymiany oznacza problemy?
 
-Jest to bardzo ważne pytanie. Wykorzystanie wymiany można traktować raczej jako symptom potencjalnego problemu (co oczywiście nie zawsze jest prawdą!) związanego z podsystemem pamięci niż przyczyną problemów. Dobrze jest mieć pamięć wymiany na wypadek, gdyby była potrzebna, ale jeśli zazwyczaj widzisz wiele gigabajtów zamienionych na serwerze, wtedy coś jest nie tak. W przypadku serwera ze stosunkowo równomiernym obciążeniem dążyłbyś do tego, aby faktycznie używana wymiana była niewielka lub żadna.
+Jest to bardzo ważne pytanie, ponieważ to, że pamięć SWAP jest zajęta, nie oznacza, że w systemie występuje wymiana (stan pamięci SWAP sprawdzaj poleceniem `vmstat`). Wykorzystanie wymiany można traktować raczej jako symptom potencjalnego problemu (co oczywiście nie zawsze jest prawdą!) związanego z podsystemem pamięci niż przyczyną problemów. Dobrze jest mieć pamięć wymiany na wypadek, gdyby była potrzebna, ale jeśli zazwyczaj widzisz wiele gigabajtów zamienionych na serwerze, wtedy coś jest nie tak. W przypadku serwera ze stosunkowo równomiernym obciążeniem dążyłbyś do tego, aby faktycznie używana wymiana była niewielka lub żadna.
 
 Proces wykorzystujący pamięć SWAP niekoniecznie (a nawet rzadko) jest źle napisanym procesem. Tak samo, wymiana sama z siebie nie jest z natury czymś złym — może być raczej czymś niepożądanym i może wskazywać problemy wtedy, gdy występuje zbyt często. Tak samo obecność stron w wymianie niekoniecznie oznacza aktualny problem z zasobami pamięci. W przypadku częstego pochłaniania pamięci wymiany poleciłbym najpierw przeprowadzić dokładniejszą analizę tego, co na serwerze zużywa tyle danych.
+
+### W jaki sposób zwolnić pamięć SWAP?
+
+O ile nie masz naprawdę dobrego powodu, aby chcieć odzyskać wolną przestrzeń w pamięci wymiany, nie wykonywałbym żadnych kroków. Jądro powinno automatycznie zamienić strony z dysku do pamięci RAM w razie potrzeby, więc prawdopodobnie zwolnienie pamięci wymiany odbędzie się w większości przypadków naturalnie.
+
+Zdarzają się jednak przypadki, że jądro Linux nie robi tego natychmiastowo. Jeśli dojdzie do sytuacji, że pamięć SWAP w systemie będzie nadal zajęta, np. gdy wymieniana strona należy do procesu, który już się zakończył, a jądro nie usunęło tych stron z pamięci wymiany, być może będziesz potrzebował sposobu, aby zmusić system zwolnienia pamięci wymiany.
+
+Istnieje kilka sposobów, aby poradzić sobie z tym problemem. Pierwszym z nich jest restart serwera, co niestety nie zawsze jest możliwe. Drugim sposobem jest wyłączenie pamięci SWAP, a następnie włączenie jej ponownie:
+
+```
+swapoff -a
+swapon -a
+```
+
+Spowoduje to opróżnienie wymiany i przeniesienie całej wymiany z powrotem do pamięci dlatego przed wykonaniem ponownego jej włączenia należy odczekać chwilę, aby strony zostały zamienione z powrotem z dysku do pamięci RAM, zanim pamięć SWAP zostanie wyłączona. Ważne jest, abyśmy mieli odpowiednią ilość wolnej pamięci RAM (wolna pamięć powinna być większa niż używana wymiana), ponieważ dane z pamięci SWAP zostaną do niej skopiowane — jeśli warunek ten nie zostanie spełniony, jądro zobaczy, że pamięć znika uruchamiając mechanizm OOM.
+
+Poniżej znajduje się prosty skrypt, który wykonuję całą procedurę automatycznie, sprawdzając jednocześnie, czy w pamięci RAM jest odpowiednia ilość wolnej przestrzeni:
+
+```bash
+#!/usr/bin/env bash
+
+# source: https://gist.github.com/Jekis/6c8fe9dfb999fa76479058e2d769ee5c
+
+function echo_mem_stat () {
+  mem_total="$(free | grep 'Mem:' | awk '{print $2}')"
+  free_mem="$(free | grep 'Mem:' | awk '{print $7}')"
+  mem_percentage=$(($free_mem * 100 / $mem_total))
+  swap_total="$(free | grep 'Swap:' | awk '{print $2}')"
+  used_swap="$(free | grep 'Swap:' | awk '{print $3}')"
+  swap_percentage=$(($used_swap * 100 / $swap_total))
+
+  echo -e "Free memory:\t$((free_mem / 1024))/$((mem_total / 1024)) MB\t($mem_percentage%)"
+  echo -e "Used swap:\t$((used_swap / 1024))/$((swap_total / 1024)) MB\t($swap_percentage%)"
+}
+
+echo "Testing..."
+echo_mem_stat
+
+if [[ $used_swap -eq 0 ]]; then
+  echo "No swap is in use."
+elif [[ $used_swap -lt $free_mem ]]; then
+  echo "Freeing swap..."
+  swapoff -a
+  swapon -a
+  echo_mem_stat
+else
+  echo "Not enough free memory. Exiting."
+  exit 1
+fi
+```
+
+Trzecim sposobem, chyba najmniej inwazyjnym jednak także najmniej skutecznym w sensie długofalowego podtrzymania wolnej przestrzeni w pamięci SWAP jest sprawdzenie, które procesy zajmuję w niej miejsce i w razie potrzeby restart tych procesów w celu jej zwolnienia.
+
+Osobiście wykorzystuję do tego poniższego one-linera:
+
+```bash
+find /proc -maxdepth 2 -path "/proc/[0-9]*/status" -readable -exec awk -v FS=":" -v TOTSWP="$(cat /proc/swaps | sed 1d | awk 'BEGIN{sum=0} {sum=sum+$(NF-2)} END{print sum}')" '{process[$1]=$2;sub(/^[ \t]+/,"",process[$1]);} END {if(process["VmSwap"] && process["VmSwap"] != "0 kB") {used_swap=process["VmSwap"];sub(/[ a-zA-Z]+/,"",used_swap);percent=(used_swap/TOTSWP*100); printf "%10s %-30s %20s %6.2f%\n",process["Pid"],process["Name"],process["VmSwap"],percent} }' '{}' \; | awk '{print $(NF-2),$0}' | sort -hr | head | cut -d " " -f2-
+
+27288 relay                                     651056 kB  31.06%
+26312 sentry                                     84536 kB   4.03%
+17685 java                                       80684 kB   3.85%
+26360 sentry                                     75732 kB   3.61%
+26314 sentry                                     68512 kB   3.27%
+ 2469 sentry                                     46636 kB   2.22%
+28019 uwsgi                                      46024 kB   2.20%
+28020 uwsgi                                      41008 kB   1.96%
+```
+
+Widzimy, że najwięcej miejsca w pamięci wymiany zajmuje proces o nazwie `relay` (jest to usługa przekazywania i przetwarzania zdarzeń aplikacji Sentry). Możemy spróbować ją zrestartować, aby zwolnić miejsce w pamięci SWAP.
+
+Na koniec tego rozdziału polecam artykuł [How to clear swap memory in Linux](https://www.redhat.com/sysadmin/clear-swap-linux).
 
 ## Więcej niż jedna pamięć wymiany
 
