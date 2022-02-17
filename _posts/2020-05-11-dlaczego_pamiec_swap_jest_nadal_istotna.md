@@ -411,7 +411,7 @@ find /proc -maxdepth 2 -path "/proc/[0-9]*/status" -readable -exec awk -v FS=":"
 
 Widzimy, że najwięcej miejsca w pamięci wymiany zajmuje proces o nazwie `relay` (jest to usługa przekazywania i przetwarzania zdarzeń aplikacji Sentry). Możemy spróbować ją zrestartować, aby zwolnić miejsce w pamięci SWAP.
 
-Na koniec tego rozdziału polecam artykuł [How to clear swap memory in Linux](https://www.redhat.com/sysadmin/clear-swap-linux).
+Na koniec tego rozdziału polecam przeczytać ciekawy artykuł [How to clear swap memory in Linux](https://www.redhat.com/sysadmin/clear-swap-linux).
 
 ## Więcej niż jedna pamięć wymiany
 
