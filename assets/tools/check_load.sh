@@ -76,7 +76,6 @@ while getopts hw:c:-: OPT ; do
 
     h | help )
 
-    # shellcheck disable=SC2154
     printf "%s" "
     $_init_name (loadavg monitoring plugin)
 

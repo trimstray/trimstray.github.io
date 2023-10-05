@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck shell=bash
-
-# Check syntax: shellcheck -s bash -e 1072,1094,1107,2145 check_load.sh
-
 # Bash 'Strict Mode':
 #   errexit  - exit the script if any statement returns a non-true return value
 #   pipefail - exit the script if any command in a pipeline errors
@@ -21,28 +17,23 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #   0077 - only for user access (more restrictive)
 umask 0027
 
-# shellcheck disable=SC2034
 __init_params=()
 __script_params=("$@")
 
 # Tasks for specific system version.
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
 
-  # shellcheck disable=SC2034
   command -v yum > /dev/null 2>&1      && _DIST_VERSION="rhel"
   command -v apt-get > /dev/null 2>&1  && _DIST_VERSION="debian"
 
   readonly _init_name="$(basename "$0")"
-  # shellcheck disable=SC2001,SC2005,SC2034
   readonly _init_directory=$(dirname "$(readlink -f "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
 
 elif [[ "$OSTYPE" == *"bsd"* ]] ; then
 
-  # shellcheck disable=SC2034
   command -v pkg > /dev/null 2>&1      && _DIST_VERSION="bsd"
 
   readonly _init_name="$(basename "$0")"
-  # shellcheck disable=SC2001,SC2005,SC2034
   readonly _init_directory=$(dirname "$(readlink -f "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
 
 else
@@ -70,7 +61,6 @@ while getopts hp:u:g:d:f:-: OPT ; do
 
     h | help )
 
-    # shellcheck disable=SC2154
     printf "%s" "
     $_init_name (permissions monitoring plugin)
 
