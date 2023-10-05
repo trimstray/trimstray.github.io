@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck shell=bash
-
-# Check syntax: shellcheck -s bash -e 1072,1094,1107,2145 check_load.sh
-
 # Bash 'Strict Mode':
 #   errexit  - exit the script if any statement returns a non-true return value
 #   pipefail - exit the script if any command in a pipeline errors
@@ -21,56 +17,41 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #   0077 - only for user access (more restrictive)
 umask 0027
 
-# shellcheck disable=SC2034
 __init_params=()
 __script_params=("$@")
 
 # Tasks for specific system version.
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
 
-  # shellcheck disable=SC2034
   command -v yum > /dev/null 2>&1      && _DIST_VERSION="rhel"
   command -v apt-get > /dev/null 2>&1  && _DIST_VERSION="debian"
 
   readonly _init_name="$(basename "$0")"
-  # shellcheck disable=SC2001,SC2005,SC2034
   readonly _init_directory=$(dirname "$(readlink -f "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
 
-  # shellcheck disable=SC2155
   export _vcpu=$(nproc) # getconf _NPROCESSORS_ONLN
-  # shellcheck disable=SC2155
   export _loadavg=$(awk '{print $1,$2,$3}' /proc/loadavg)
-  # shellcheck disable=SC2155
   export _task_running=$(awk '/procs_running/ { print $2 }' /proc/stat)
-  # shellcheck disable=SC2155
   export _task_unint=$(ps auxf | awk '{if($8=="D") print $0;}' | wc -l)
 
 elif [[ "$OSTYPE" == *"freebsd"* ]] ; then
 
-  # shellcheck disable=SC2034
   command -v pkg > /dev/null 2>&1      && _DIST_VERSION="bsd"
 
   readonly _init_name="$(basename "$0")"
-  # shellcheck disable=SC2001,SC2005,SC2034
   readonly _init_directory=$(dirname "$(readlink -f "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
 
-  # shellcheck disable=SC2155
   export _vcpu=$(sysctl -n hw.ncpu) # getconf _NPROCESSORS_ONLN
-  # shellcheck disable=SC2155
   export _loadavg=$(sysctl vm.loadavg | awk '{print $3,$4,$5}')
 
 elif [[ "$OSTYPE" == *"openbsd"* ]] ; then
 
-  # shellcheck disable=SC2034
   command -v pkg > /dev/null 2>&1      && _DIST_VERSION="bsd"
 
   readonly _init_name="$(basename "$0")"
-  # shellcheck disable=SC2001,SC2005,SC2034
   readonly _init_directory=$(dirname "$(readlink -f "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
 
-  # shellcheck disable=SC2155
   export _vcpu=$(sysctl -n hw.ncpu)
-  # shellcheck disable=SC2155
   export _loadavg=$(sysctl vm.loadavg | cut -d "=" -f2 | awk '{print $1,$2,$3}')
 
 else
@@ -199,39 +180,30 @@ for ((i=st; i<=en; i++)) ; do
 done
 
 # LOADAVG1
-# shellcheck disable=SC2046,SC2116
 _loadavg1=$(echo "${_la_tresh[0]}")
 
 # LOADAVG5
-# shellcheck disable=SC2046,SC2116
 _loadavg5=$(echo "${_la_tresh[1]}")
 
 # LOADAVG15
-# shellcheck disable=SC2046,SC2116
 _loadavg15=$(echo "${_la_tresh[2]}")
 
 # WLOAD1
-# shellcheck disable=SC2046
 _wload1=$(echo "${_vcpu}" "${_w_tresh[0]}" | awk '{printf "%.2f\n", $1*$2}')
 
 # WLOAD5
-# shellcheck disable=SC2046
 _wload5=$(echo "${_vcpu}" "${_w_tresh[1]}" | awk '{printf "%.2f\n", $1*$2}')
 
 # WLOAD15
-# shellcheck disable=SC2046
 _wload15=$(echo "${_vcpu}" "${_w_tresh[2]}" | awk '{printf "%.2f\n", $1*$2}')
 
 # CLOAD1
-# shellcheck disable=SC2046
 _cload1=$(echo "${_vcpu}" "${_c_tresh[0]}" | awk '{printf "%.2f\n", $1*$2}')
 
 # CLOAD5
-# shellcheck disable=SC2046
 _cload5=$(echo "${_vcpu}" "${_c_tresh[1]}" | awk '{printf "%.2f\n", $1*$2}')
 
 # CLOAD15
-# shellcheck disable=SC2046
 _cload15=$(echo "${_vcpu}" "${_c_tresh[2]}" | awk '{printf "%.2f\n", $1*$2}')
 
 function _get_stats() {
