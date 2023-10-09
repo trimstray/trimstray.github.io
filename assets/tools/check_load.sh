@@ -207,17 +207,7 @@ _cload15=$(echo "${_vcpu}" "${_c_tresh[2]}" | awk '{printf "%.2f\n", $1*$2}')
 
 function _get_stats() {
 
-  printf "|vcpu=%s load1=%s,%s,%s load5=%s,%s,%s load15=%s,%s,%s\\n" \
-         "$_vcpu" \
-         "$_loadavg1" \
-         "$_wload1" \
-         "$_cload1" \
-         "$_loadavg5" \
-         "$_wload5" \
-         "$_cload5" \
-         "$_loadavg15" \
-         "$_wload15" \
-         "$_cload15"
+  echo -en "; vcpu=$_vcpu load1=$_loadavg1,$_wload1,$_cload1 load5=$_loadavg5,$_wload5,$_cload5 load15=$_loadavg15,$_wload15,$_cload15\\n"
 
 }
 
