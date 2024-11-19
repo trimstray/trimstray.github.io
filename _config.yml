@@ -12,14 +12,9 @@ description: >-
 baseurl: ''
 url: "https://trimstray.github.io"
 
-twitter:
-  username: trimstray
-  card: summary
-
 social:
   name: Michał Żurawski
   links:
-    - https://twitter.com/trimstray
     - https://github.com/trimstray
     - https://keybase.io/trimstray
 

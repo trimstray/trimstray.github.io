@@ -42,5 +42,4 @@ Ten blog nie używa plików cookie. Wykorzystuje natomiast poniższe technologie
 
 Możesz skontaktować się ze mną na kilka sposobów:
 
-- social media: [Twitter](https://twitter.com/trimstray), [GitHub](https://github.com/trimstray) lub [Keybase](https://keybase.io/trimstray)
 - e-mail (base64): <span class="h-b">dHJpbXN0cmF5QGdtYWlsLmNvbQo=</span>
