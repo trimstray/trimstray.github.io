@@ -40,7 +40,7 @@ Przykład:
 
 Swego czasu idealnym przykładem aplikacji (nie wiem, czy do tej pory tak jest), z której poziomu wszystko działało z jednego miejsca, był Wordpress — łatwo w takiej sytuacji o pomyłkę, która może mieć katastrofalne skutki.
 
-Do dalszej analizy oraz szerszego spojrzenia na ten temat polecam świetny artykuł: [Hidden directories and files as a source of sensitive information about web application](https://medium.com/@_bl4de/hidden-directories-and-files-as-a-source-of-sensitive-information-about-web-application-84e5c534e5ad).
+Do dalszej analizy oraz szerszego spojrzenia na ten temat polecam świetny artykuł: ~~Hidden directories and files as a source of sensitive information about web application~~.
 
 ## Konfiguracja
 
@@ -53,6 +53,7 @@ Do testowania wyrażeń regularnych polecam poniższe narzędzia:
 - [RegEx Testing](https://www.regextester.com/)
 - [RegEx Pal](https://www.regexpal.com/)
 - [CyberChef](https://gchq.github.io/CyberChef/)
+- [Cyrilex](https://extendsclass.com/regex-tester.html)
 
 W tym artykule zaprezentuję przykład konfiguracji dla dwóch znanych serwerów HTTP/HTTPS: Varnish oraz NGINX.
 
